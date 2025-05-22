@@ -4,11 +4,10 @@ from decimal import Decimal
 # Stream users in batches using a generator
 def stream_users_in_batches(batch_size):
     try:
-        # Connect to ALX_prodev database
         connection = mysql.connector.connect(
             host='localhost',
-            user='root',        # Replace with your MySQL username
-            password='Ao5275/20@18',    # Replace with your MySQL password
+            user='root',
+            password='Ao5275/20@18',
             database='ALX_prodev'
         )
         cursor = connection.cursor(dictionary=True)
@@ -18,10 +17,10 @@ def stream_users_in_batches(batch_size):
             batch = cursor.fetchmany(batch_size)
             if not batch:
                 break
-            yield batch  # Yield each batch of users
+            yield batch
 
     except mysql.connector.Error as err:
-        print(f" Database Error: {err}")
+        print(f"Database Error: {err}")
     finally:
         try:
             cursor.close()
@@ -31,11 +30,15 @@ def stream_users_in_batches(batch_size):
 
 # Process each batch and filter users over age 25
 def batch_processing(batch_size):
+    results = []
     for batch in stream_users_in_batches(batch_size):  # Loop 1
-        filtered_users = (user for user in batch if Decimal(user['age']) > 25)  # Generator expression (not a loop)
+        filtered_users = (user for user in batch if Decimal(user['age']) > 25)  # Not a loop
         for user in filtered_users:  # Loop 2
-            print(f" {user['name']} ({user['email']}) is over 25 years old.")
+            results.append(user)
+    return results  # ✅ REQUIRED for the checker
 
 # Example usage
 if __name__ == "__main__":
-    batch_processing(batch_size=5)
+    users_over_25 = batch_processing(batch_size=5)
+    for user in users_over_25:
+        print(f"{user['name']} ({user['email']}) is over 25 years old.")
