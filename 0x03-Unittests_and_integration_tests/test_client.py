@@ -174,21 +174,21 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         result = client.public_repos()
         self.assertEqual(result, self.expected_repos)
 
-    def test_public_repos_with_license(self) -> None:
-        """Test public_repos with apache-2.0 license filter.
+def test_public_repos_with_license(self) -> None:
+    """Test public_repos with apache-2.0 license filter.
 
-        This integration test verifies that the public_repos method
-        with license="apache-2.0" returns only repositories with
-        Apache 2.0 license from the fixtures.
-        """
-        from client import GithubOrgClient
+    This integration test verifies that the public_repos method
+    with license="apache-2.0" returns only repositories with
+    Apache 2.0 license from the fixtures.
+    """
+    from client import GithubOrgClient
 
-        client = GithubOrgClient("google")
-        result = client.public_repos(
-            license="apache-2.0"
-            )
-        self.assertEqual(result, self.apache2_repos)
-
+    client = GithubOrgClient("google")
+    result = client.public_repos(license="apache-2.0")
+    self.assertEqual(
+        result,
+        self.apache2_repos
+    )
 
 if __name__ == "__main__":
     unittest.main()
