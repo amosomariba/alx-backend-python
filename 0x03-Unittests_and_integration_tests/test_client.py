@@ -4,6 +4,7 @@
 This module contains unit tests for the GithubOrgClient class,
 specifically testing the org method with mocked dependencies.
 """
+
 import unittest
 from unittest.mock import patch
 from parameterized import parameterized, parameterized_class
@@ -89,15 +90,11 @@ class TestGithubOrgClient(unittest.TestCase):
         def property_factory():
             return property(lambda self: test_url)
 
-        with patch(property_patch, new_callable=property_factory) \
-                as mock_public_repos_url:
-
+        with patch(property_patch, new_callable=property_factory):
             client = GithubOrgClient("google")
             result = client.public_repos()
-
             expected_repos = ["episodes.dart", "kratu", "build_tools"]
             self.assertEqual(result, expected_repos)
-
             mock_get_json.assert_called_once()
 
     @parameterized.expand([
@@ -174,21 +171,19 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         result = client.public_repos()
         self.assertEqual(result, self.expected_repos)
 
-def test_public_repos_with_license(self) -> None:
-    """Test public_repos with apache-2.0 license filter.
+    def test_public_repos_with_license(self) -> None:
+        """Test public_repos with apache-2.0 license filter.
 
-    This integration test verifies that the public_repos method
-    with license="apache-2.0" returns only repositories with
-    Apache 2.0 license from the fixtures.
-    """
-    from client import GithubOrgClient
+        This integration test verifies that the public_repos method
+        with license="apache-2.0" returns only repositories with
+        Apache 2.0 license from the fixtures.
+        """
+        from client import GithubOrgClient
 
-    client = GithubOrgClient("google")
-    result = client.public_repos(license="apache-2.0")
-    self.assertEqual(
-        result,
-        self.apache2_repos
-    )
+        client = GithubOrgClient("google")
+        result = client.public_repos(license="apache-2.0")
+        self.assertEqual(result, self.apache2_repos)
+
 
 if __name__ == "__main__":
     unittest.main()
