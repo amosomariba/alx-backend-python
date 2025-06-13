@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-b!mtmtr7kua0gkti+@_9p+$__z6ke25zu$=m+qv6phq!hwwv$+"
+SECRET_KEY = "django-insecure-0_@fp9v(7s+$@a@#a#@q03jijb_=#*9$_pmsxnpzezpx^b0j+a"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,10 +37,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # 3rd party
-    "apps.chats",
-    "rest_framework",
-    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -51,8 +47,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # ...
-    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "messaging_app.urls"
@@ -60,7 +54,7 @@ ROOT_URLCONF = "messaging_app.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
