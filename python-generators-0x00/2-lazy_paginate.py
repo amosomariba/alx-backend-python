@@ -1,13 +1,14 @@
 import mysql.connector
 
+
 # Fetches a specific page of users from the database
 def paginate_users(page_size, offset):
     try:
         connection = mysql.connector.connect(
-            host='localhost',
-            user='root',
-            password='Ao5275/20@18',
-            database='ALX_prodev'
+            host="localhost",
+            user="root",
+            password="Ao5275/20@18",
+            database="ALX_prodev",
         )
         cursor = connection.cursor(dictionary=True)
         query = "SELECT * FROM user_data LIMIT %s OFFSET %s"
@@ -24,6 +25,7 @@ def paginate_users(page_size, offset):
         except:
             pass
 
+
 # Generator that lazily paginates users
 def lazy_paginate(page_size):
     offset = 0
@@ -33,6 +35,7 @@ def lazy_paginate(page_size):
             break
         yield page
         offset += page_size
+
 
 # Example usage
 if __name__ == "__main__":

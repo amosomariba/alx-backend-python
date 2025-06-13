@@ -94,11 +94,7 @@ class TestMemoize(unittest.TestCase):
         # Create an instance of TestClass
         test_instance = TestClass()
         # Mock the a_method to track how many times it's called
-        with patch.object(
-            test_instance,
-            "a_method",
-            return_value=42
-        ) as mock_method:
+        with patch.object(test_instance, "a_method", return_value=42) as mock_method:
 
             # Call a_property twice
             result1 = test_instance.a_property

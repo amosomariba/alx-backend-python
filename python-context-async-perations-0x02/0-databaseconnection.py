@@ -1,5 +1,6 @@
 import sqlite3
 
+
 # Class-based context manager for DB connection
 class DatabaseConnection:
     def __init__(self, db_name):
@@ -14,6 +15,7 @@ class DatabaseConnection:
         if self.conn:
             self.conn.close()
             print("[INFO] Database connection closed.")
+
 
 # Using the context manager to fetch users
 with DatabaseConnection("example.db") as conn:

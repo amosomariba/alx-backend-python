@@ -1,14 +1,15 @@
 import mysql.connector
 from decimal import Decimal, getcontext
 
+
 # Generator to stream user ages one by one
 def stream_user_ages():
     try:
         connection = mysql.connector.connect(
-            host='localhost',
-            user='root',
-            password='Ao5275/20@18',
-            database='ALX_prodev'
+            host="localhost",
+            user="root",
+            password="Ao5275/20@18",
+            database="ALX_prodev",
         )
         cursor = connection.cursor()
         cursor.execute("SELECT age FROM user_data")
@@ -25,6 +26,7 @@ def stream_user_ages():
         except:
             pass
 
+
 # Calculate average age using the generator
 def calculate_average_age():
     total_age = Decimal(0)
@@ -39,6 +41,7 @@ def calculate_average_age():
         print(f"Average age of users: {average}")
     else:
         print("No users found.")
+
 
 # Run the calculation
 if __name__ == "__main__":
