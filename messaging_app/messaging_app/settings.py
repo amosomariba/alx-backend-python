@@ -39,8 +39,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # apps
     "rest_framework",
-    "chats"
+    "chats",
     'corsheaders',
+    "rest_framework_simplejwt", 
 ]
 
 MIDDLEWARE = [
@@ -133,6 +134,12 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
     ],
 }
 
