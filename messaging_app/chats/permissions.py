@@ -1,5 +1,3 @@
-#week 5 assignment task 0
-
 from rest_framework import permissions
 from .models import Conversation, Message
 
