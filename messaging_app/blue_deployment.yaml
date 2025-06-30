@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: messaging-app
-        image: amosomariba/messaging-app:blue
+        image: amosomariba/messaging-app:2.0
         ports:
         - containerPort: 8000
