@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# kurbeScript: Start Minikube and check Kubernetes status
+
+echo "🔍 Checking if Minikube is installed..."
+if ! command -v minikube &> /dev/null; then
+  echo "❌ Minikube is not installed. Please install it first."
+  exit 1
+fi
+
+echo "✅ Minikube is installed."
+
+# Start Minikube with Docker as the driver
+echo "🚀 Starting Minikube cluster..."
+minikube start --driver=docker
+
+# Check cluster info
+echo "📡 Verifying Kubernetes cluster status..."
+kubectl cluster-info
+
+# Get current pods
+echo "📦 Retrieving available pods..."
+kubectl get pods --all-namespaces
+
+echo "✅ Kubernetes is up and running!"
