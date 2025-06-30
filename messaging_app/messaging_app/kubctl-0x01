@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Script: kubctl-0x01
+# Purpose: Scale Django app, test traffic load, and monitor resource usage.
+
+APP_NAME="messaging-app-deployment"
+SERVICE_NAME="messaging-app-service"
+
+echo "📈 Scaling $APP_NAME to 3 replicas..."
+kubectl scale deployment "$APP_NAME" --replicas=3
+
+echo "🔍 Checking running pods..."
+kubectl get pods -l app=messaging-app
+
+echo "🌐 Getting service URL..."
+SERVICE_URL=$(minikube service "$SERVICE_NAME" --url)
+
+if ! command -v wrk &> /dev/null
+then
+    echo "❌ wrk is not installed. Installing wrk..."
+    sudo apt update
+    sudo apt install -y wrk
+fi
+
+echo "🚀 Running load test using wrk..."
+wrk -t4 -c20 -d10s "$SERVICE_URL"
+
+echo "📊 Resource usage:"
+kubectl top pods
