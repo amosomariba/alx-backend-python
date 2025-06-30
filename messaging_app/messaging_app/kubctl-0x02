@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Script: kubctl-0x02
+# Purpose: Perform blue-green deployment
+
+echo "📦 Applying blue deployment..."
+kubectl apply -f blue_deployment.yaml
+
+echo "📦 Applying green deployment..."
+kubectl apply -f green_deployment.yaml
+
+echo "🌐 Applying service..."
+kubectl apply -f kubeservice.yaml
+
+echo "⏱️ Waiting for green pod to be ready..."
+sleep 10
+
+echo "🔍 Listing all pods..."
+kubectl get pods -l app=messaging-app
+
+echo "📜 Checking logs for green version..."
+GREEN_POD=$(kubectl get pods -l version=green -o jsonpath="{.items[0].metadata.name}")
+kubectl logs "$GREEN_POD"

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: messaging-app-service
+spec:
+  selector:
+    app: messaging-app
+    version: blue  # 👈 starts by routing to blue
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+  type: ClusterIP
+
+
+# After Testing: Switch Traffic to Green
+# Edit kubeservice.yaml:
+# selector:
+#   app: messaging-app
+#   version: green  # 👈 Switch to green
+
+# kubectl apply -f kubeservice.yaml
+
