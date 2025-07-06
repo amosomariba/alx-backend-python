@@ -48,6 +48,13 @@ jobs:
         source venv/bin/activate
         pip install --upgrade pip
         pip install -r messaging_app/requirements.txt
+        pip install flake8 pytest pytest-cov
+
+    - name: Lint with flake8
+      run: |
+        source venv/bin/activate
+        flake8 messaging_app
+      # If flake8 fails, it will exit non-zero and stop the build
 
     - name: Wait for MySQL to be ready
       run: sleep 20
@@ -64,10 +71,10 @@ jobs:
         DB_HOST: ${{ env.DB_HOST }}
         DB_PORT: ${{ env.DB_PORT }}
 
-    - name: Run tests
+    - name: Run tests with coverage
       run: |
         source venv/bin/activate
-        pytest
+        pytest --cov=messaging_app --cov-report=xml
       env:
         DJANGO_SETTINGS_MODULE: messaging_app.settings
         DB_NAME: ${{ env.DB_NAME }}
@@ -75,3 +82,9 @@ jobs:
         DB_PASSWORD: ${{ env.DB_PASSWORD }}
         DB_HOST: ${{ env.DB_HOST }}
         DB_PORT: ${{ env.DB_PORT }}
+
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: coverage.xml
