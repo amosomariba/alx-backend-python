@@ -3,6 +3,8 @@ pipeline {
 
     environment {
         GITHUB_CREDENTIALS = 'github-creds'
+        DOCKER_HUB_CREDENTIALS = 'docker-hub-creds'
+        DOCKER_IMAGE = 'yourusername/messaging-app' // 🔁 Change this
     }
 
     stages {
@@ -10,7 +12,7 @@ pipeline {
             steps {
                 git credentialsId: "${env.GITHUB_CREDENTIALS}", 
                     url: 'https://github.com/amomariba/messaging_app.git', 
-                    branch: 'main'  // ✅ specific git branch
+                    branch: 'main'
             }
         }
 
@@ -20,7 +22,7 @@ pipeline {
                     python3 -m venv venv
                     source venv/bin/activate
                     pip3 install --upgrade pip
-                    pip3 install -r messaging_app/requirements.txt  # ✅ correct path
+                    pip3 install -r messaging_app/requirements.txt
                 '''
             }
         }
@@ -37,6 +39,24 @@ pipeline {
         stage('Publish Report') {
             steps {
                 junit 'report.xml'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    dockerImage = docker.build("${DOCKER_IMAGE}")
+                }
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_HUB_CREDENTIALS}") {
+                        dockerImage.push('latest')
+                    }
+                }
             }
         }
     }
